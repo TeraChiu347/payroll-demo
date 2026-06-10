@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>服務業薪資系統 — 使用說明手冊</title>
+  <style>
+    :root {
+      --blue:      #1565C0;
+      --blue-lt:   #E3F2FD;
+      --blue-dark: #0D47A1;
+      --teal:      #26A69A;
+      --teal-lt:   #E0F2F1;
+      --teal-dark: #00796B;
+      --green:     #8BC34A;
+      --green-lt:  #F1F8E9;
+      --green-dark:#558B2F;
+      --red:       #C00000;
+      --gray:      #F5F7FA;
+      --border:    #CFD8DC;
+      --text:      #263238;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Noto Sans TC', '微軟正黑體', 'Microsoft JhengHei', sans-serif;
+      background: #EEF6F5;
+      color: var(--text);
+      line-height: 1.8;
+    }
+
+    /* ── 頁首 ── */
+    header {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue) 50%, var(--teal) 100%);
+      color: white;
+      padding: 36px 40px;
+    }
+    .header-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+    }
+    .header-text { text-align: center; }
+    header h1 { font-size: 2rem; letter-spacing: .06em; margin-bottom: 8px; }
+    header p  { font-size: .92rem; opacity: .82; }
+
+    /* ── 版型 ── */
+    .wrapper {
+      max-width: 920px;
+      margin: 32px auto 60px;
+      padding: 0 16px;
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    /* ── 側邊目錄 ── */
+    nav {
+      width: 210px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 20px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 14px rgba(21,101,192,.1);
+      padding: 18px 0;
+    }
+    nav h3 {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: .12em;
+      color: var(--teal);
+      padding: 0 18px 10px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 8px;
+    }
+    nav a {
+      display: block;
+      padding: 6px 18px;
+      font-size: .88rem;
+      color: #546E7A;
+      text-decoration: none;
+      border-left: 3px solid transparent;
+      transition: all .15s;
+    }
+    nav a:hover {
+      background: var(--teal-lt);
+      color: var(--teal-dark);
+      border-left-color: var(--teal);
+    }
+    nav .nav-special {
+      color: var(--teal-dark);
+      font-weight: bold;
+    }
+
+    /* ── 主內容 ── */
+    main { flex: 1; min-width: 0; }
+
+    section {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px rgba(21,101,192,.07);
+      padding: 28px 30px;
+      margin-bottom: 24px;
+    }
+
+    /* h2 預設藍色，teal 變體 */
+    h2 {
+      font-size: 1.2rem;
+      color: white;
+      background: var(--blue);
+      margin: -28px -30px 20px;
+      padding: 14px 24px;
+      border-radius: 12px 12px 0 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    h2.teal { background: var(--teal-dark); }
+    h2 .num {
+      background: rgba(255,255,255,.22);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: .82rem;
+      letter-spacing: .05em;
+    }
+
+    h3 {
+      font-size: 1rem;
+      color: var(--teal-dark);
+      margin: 20px 0 10px;
+      padding-left: 10px;
+      border-left: 4px solid var(--teal);
+    }
+
+    p  { margin-bottom: 10px; font-size: .95rem; }
+    ul { padding-left: 22px; margin-bottom: 10px; }
+    li { margin-bottom: 4px; font-size: .95rem; }
+
+    /* ── 最大優勢卡 ── */
+    .advantage-section {
+      background: linear-gradient(135deg, var(--blue-dark) 0%, var(--teal-dark) 100%);
+      border-radius: 14px;
+      padding: 30px 32px;
+      margin-bottom: 24px;
+      color: white;
+      box-shadow: 0 4px 20px rgba(0,121,107,.25);
+    }
+    .advantage-section h2 {
+      background: none;
+      margin: 0 0 18px;
+      padding: 0;
+      border-radius: 0;
+      font-size: 1.3rem;
+      letter-spacing: .04em;
+    }
+    .advantage-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .adv-card {
+      background: rgba(255,255,255,.12);
+      border-radius: 10px;
+      padding: 16px 18px;
+      border: 1px solid rgba(255,255,255,.2);
+      backdrop-filter: blur(4px);
+    }
+    .adv-card .adv-icon { font-size: 1.6rem; margin-bottom: 6px; }
+    .adv-card strong { display: block; font-size: .95rem; margin-bottom: 4px; }
+    .adv-card p { font-size: .85rem; opacity: .88; margin: 0; line-height: 1.6; }
+
+    @media (max-width: 600px) {
+      .advantage-cards { grid-template-columns: 1fr; }
+    }
+
+    /* ── 表格 ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      font-size: .9rem;
+    }
+    thead tr { background: var(--blue); color: white; }
+    thead th { padding: 9px 12px; text-align: left; }
+    tbody tr:nth-child(odd)  { background: var(--gray); }
+    tbody tr:nth-child(even) { background: white; }
+    tbody td { padding: 8px 12px; border-bottom: 1px solid var(--border); }
+    tbody tr:hover { background: var(--teal-lt); }
+
+    /* ── 步驟卡片 ── */
+    .steps { display: flex; flex-direction: column; gap: 12px; margin: 14px 0; }
+    .step {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      background: var(--gray);
+      border-radius: 8px;
+      padding: 12px 16px;
+      border-left: 4px solid var(--teal);
+    }
+    .step-num {
+      background: var(--teal);
+      color: white;
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: .85rem;
+    }
+    .step-body { flex: 1; }
+    .step-body > strong:first-child { display: block; margin-bottom: 2px; }
+
+    /* ── 注意框 ── */
+    .callout {
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: .9rem;
+    }
+    .callout-blue  { background: var(--blue-lt);  border-left: 4px solid var(--blue); }
+    .callout-teal  { background: var(--teal-lt);  border-left: 4px solid var(--teal); }
+    .callout-green { background: var(--green-lt); border-left: 4px solid var(--green-dark); }
+    .callout-red   { background: #FFE7E7; border-left: 4px solid var(--red); }
+
+    /* ── 公式區 ── */
+    .formula {
+      background: #1A2332;
+      color: #80CBC4;
+      border-radius: 8px;
+      padding: 14px 18px;
+      font-family: 'Courier New', monospace;
+      font-size: .88rem;
+      line-height: 1.9;
+      margin: 12px 0;
+    }
+
+    /* ── FAQ ── */
+    .faq-item {
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 10px;
+      overflow: hidden;
+    }
+    .faq-q {
+      background: var(--blue-lt);
+      padding: 12px 16px;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      user-select: none;
+      transition: background .15s;
+    }
+    .faq-q:hover { background: #BBDEFB; }
+    .faq-q .tag {
+      background: var(--blue);
+      color: white;
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-size: .75rem;
+      flex-shrink: 0;
+    }
+    .faq-q .arrow { margin-left: auto; transition: transform .2s; font-style: normal; }
+    .faq-a {
+      padding: 14px 16px;
+      font-size: .92rem;
+      background: white;
+      display: none;
+      border-top: 1px solid var(--border);
+    }
+    .faq-item.open .faq-a  { display: block; }
+    .faq-item.open .arrow  { transform: rotate(90deg); }
+
+    /* ── 色票說明 ── */
+    .color-badges { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0; }
+    .badge {
+      padding: 5px 14px;
+      border-radius: 20px;
+      font-size: .85rem;
+      font-weight: bold;
+    }
+    .badge-red    { background: #FFE7E7; color: #C00000;  border: 1px solid #FFABAB; }
+    .badge-yellow { background: #FFF9C4; color: #7D5A00;  border: 1px solid #FFF176; }
+    .badge-blue   { background: var(--blue-lt); color: var(--blue-dark); border: 1px solid #90CAF9; }
+
+    /* ── 備忘卡 ── */
+    .memo-card {
+      background: #1A2332;
+      color: #E8EAF0;
+      border-radius: 10px;
+      padding: 20px 24px;
+      font-family: 'Courier New', monospace;
+      font-size: .88rem;
+      line-height: 2;
+    }
+    .memo-card .mc-title { color: #80CBC4; font-weight: bold; margin-bottom: 4px; }
+    .memo-card .mc-item  { padding-left: 16px; color: #DCEDC8; }
+    .memo-card hr { border: none; border-top: 1px solid #2E3F55; margin: 10px 0; }
+
+    /* ── 頁首 Logo ── */
+    .header-logo {
+      height: 64px;
+      width: auto;
+      flex-shrink: 0;
+      filter: drop-shadow(0 2px 8px rgba(0,0,0,.35));
+    }
+
+    /* ── 授權卡 ── */
+    .license-card {
+      display: flex;
+      gap: 16px;
+      align-items: flex-start;
+      background: var(--green-lt);
+      border: 1px solid #C5E1A5;
+      border-radius: 10px;
+      padding: 18px 20px;
+      margin: 14px 0;
+    }
+    .license-card .lc-icon { font-size: 2rem; flex-shrink: 0; }
+    .license-card .lc-body strong { display: block; color: var(--green-dark); margin-bottom: 4px; font-size: 1rem; }
+    .license-card .lc-body p { font-size: .9rem; margin: 0; line-height: 1.7; }
+
+    /* ── 頁尾 ── */
+    footer {
+      text-align: center;
+      color: #90A4AE;
+      font-size: .82rem;
+      padding: 16px;
+    }
+
+    @media (max-width: 700px) {
+      /* 側邊欄隱藏 */
+      nav { display: none; }
+
+      /* Header：logo + 標題上下排列 */
+      header { padding: 24px 20px; }
+      .header-inner {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 12px;
+      }
+      .header-inner > div:last-child { display: none; }
+      .header-logo { height: 48px; }
+      header h1 { font-size: 1.4rem; }
+      header p  { font-size: .82rem; }
+
+      /* 主要版型 */
+      .wrapper { margin: 16px auto 40px; padding: 0 12px; }
+      section  { padding: 20px 16px; }
+      h2       { font-size: 1rem; margin: -20px -16px 16px; }
+
+      /* 最大優勢 */
+      .advantage-section { padding: 22px 16px; }
+
+      /* 表格橫向捲動 */
+      .table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      table { min-width: 480px; }
+
+      /* 授權卡 */
+      .license-card { flex-direction: column; gap: 10px; }
+
+      /* 公式區 */
+      .formula { font-size: .8rem; padding: 12px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <img src="Logo.jpg" alt="Apodevelop" class="header-logo">
+    <div class="header-text">
+      <h1>使用說明手冊</h1>
+      <p>服務業薪資系統 v1.0 ・ 適用 2026 年勞基法及勞健保標準</p>
+    </div>
+    <div></div>
+  </div>
+</header>
+
+<div class="wrapper">
+
+  <!-- 側邊目錄 -->
+  <nav>
+    <h3>目錄</h3>
+    <a href="#s-adv" class="nav-special">★ 最大優勢</a>
+    <a href="#s1">一、系統簡介</a>
+    <a href="#s2">二、事前準備</a>
+    <a href="#s3">三、初始化</a>
+    <a href="#s4">四、基本設定</a>
+    <a href="#s5">五、每月操作</a>
+    <a href="#s6">六、加班費說明</a>
+    <a href="#s7">七、刪除報表</a>
+    <a href="#s8">八、常見問題</a>
+    <a href="#s9">九、備忘卡</a>
+    <a href="#s10">十、授權說明</a>
+  </nav>
+
+  <main>
+
+    <!-- 最大優勢 -->
+    <div class="advantage-section" id="s-adv">
+      <h2>★ 為什麼選擇這套系統？</h2>
+      <div class="advantage-cards">
+        <div class="adv-card">
+          <div class="adv-icon">🔐</div>
+          <strong>資料完全屬於您</strong>
+          <p>所有員工薪資、出勤紀錄都存在<strong>您自己的 Google 試算表</strong>。我們無法存取，您擁有完整所有權與控制權。</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">☁️</div>
+          <strong>零安裝、隨處可用</strong>
+          <p>不需安裝任何軟體，只要有瀏覽器就能開啟。電腦、手機、平板都可以操作。</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">⚙️</div>
+          <strong>安裝由我們負責</strong>
+          <p>客戶只需具備一台可上網的電腦與 Google 帳號，其餘安裝設定全由 Apodevelop 代為處理。</p>
+        </div>
+        <div class="adv-card">
+          <div class="adv-icon">📋</div>
+          <strong>勞基法即時守護</strong>
+          <p>輸入班表時自動偵測加班超時、連續上班超天等違規，<strong>立即彈出警示</strong>事前預防違法風險。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 一 -->
+    <section id="s1">
+      <h2><span class="num">一</span>這個系統是做什麼的？</h2>
+      <p>想像你開了一家店，有幾位員工，有人領時薪、有人領月薪。每個月快到發薪日，你需要做這幾件事：</p>
+      <ul>
+        <li>計算每個人上了幾個小時的班</li>
+        <li>計算加班費（依勞基法，加班有不同倍率）</li>
+        <li>扣掉勞保費、健保費</li>
+        <li>產生一張讓員工確認的<strong>薪資條</strong></li>
+        <li>老闆自己也要一張看全部人的<strong>薪資總表</strong></li>
+        <li>確認有沒有違反<strong>勞基法</strong>（連續上班太多天、加班超時等）</li>
+      </ul>
+      <div class="callout callout-teal">
+        這個系統就是幫你把上面這些事情，<strong>自動算好、自動排版、存在您自己的 Google 試算表裡</strong>。
+      </div>
+    </section>
+
+    <!-- 二 -->
+    <section id="s2">
+      <h2 class="teal"><span class="num">二</span>開始前要準備什麼？</h2>
+      <p>安裝工作由我們代為處理，您只需要完成以下兩個步驟：</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>準備一份 Google 試算表</strong>
+            登入您的 Google 帳號，開一份空白的 Google 試算表即可，不需要做任何其他設定。
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>將試算表編輯權限分享給我們</strong>
+            點試算表右上角的「<strong>共用</strong>」按鈕，將以下帳號加入為<strong>編輯者</strong>：<br><br>
+            <div style="background:#1A2332;color:#80CBC4;font-family:'Courier New',monospace;font-size:1rem;padding:10px 18px;border-radius:8px;display:inline-block;letter-spacing:.04em;">service@apodevelop.com</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-green">
+        完成分享後，請通知我們。我們會幫您完成安裝，安裝好後打開試算表，頂端就會出現<strong>「薪資系統」</strong>選單，即可開始使用。
+      </div>
+    </section>
+
+    <!-- 三 -->
+    <section id="s3">
+      <h2><span class="num">三</span>第一次使用 — 初始化（只做一次）</h2>
+      <p>點選選單 → <strong>「薪資系統」</strong> → <strong>「① 初始化工作表（首次使用）」</strong></p>
+      <p>系統會自動幫你建立四個分頁：</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>分頁名稱</th><th>用途</th></tr></thead>
+        <tbody>
+          <tr><td>員工資料</td><td>記錄每位員工的基本資料和薪資條件</td></tr>
+          <tr><td>排班表</td><td>每天記錄員工幾點上班、幾點下班</td></tr>
+          <tr><td>薪資設定</td><td>公司名稱、費率、計算月份等設定</td></tr>
+          <tr><td>投保薪資分級表</td><td>勞健保計算用的官方級距表（已預填）</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-teal">初始化完成後，系統會跳出說明視窗，告訴你接下來要做什麼。</div>
+    </section>
+
+    <!-- 四 -->
+    <section id="s4">
+      <h2><span class="num">四</span>基本設定（第一次或有異動時填寫）</h2>
+
+      <h3>A. 填寫員工資料</h3>
+      <p>前往分頁：<strong>「員工資料」</strong>，每一列填一位員工：</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>欄</th><th>欄位名稱</th><th>怎麼填</th><th>範例</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>編號</td><td>自訂，不重複就好</td><td>E001</td></tr>
+          <tr><td>B</td><td>姓名</td><td>員工的名字</td><td>王小明</td></tr>
+          <tr><td>C</td><td>部門</td><td>所屬部門</td><td>門市</td></tr>
+          <tr><td>D</td><td>計薪類型</td><td>只能填「時薪」或「月薪」（有下拉選單）</td><td>時薪</td></tr>
+          <tr><td>E</td><td>時薪／底薪</td><td>時薪員工填每小時金額；月薪員工填每月底薪</td><td>180 或 38000</td></tr>
+          <tr><td>F</td><td>標準工時/日</td><td>每天幾小時算正常工時（超過才算加班）</td><td>8</td></tr>
+          <tr><td>G</td><td>備註</td><td>選填，可留空</td><td></td></tr>
+          <tr><td>H</td><td>投保薪資</td><td>填 0 = 自動對應分級表；也可手動指定金額</td><td>0 或 26400</td></tr>
+          <tr><td>I</td><td>勞退自提率</td><td>員工自願多提撥勞退的比例（0～6%）</td><td>0 或 0.06</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>B. 確認薪資設定</h3>
+      <p>前往分頁：<strong>「薪資設定」</strong>，通常只需修改以下幾項（其餘預設值依 2026 年標準已填好）：</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>設定項目</th><th>說明</th><th>範例</th></tr></thead>
+        <tbody>
+          <tr><td>公司名稱</td><td>顯示在薪資條上方</td><td>○○服務有限公司</td></tr>
+          <tr><td>起始日期</td><td>本月計算起始日</td><td>2026/06/01</td></tr>
+          <tr><td>結束日期</td><td>本月計算結束日</td><td>2026/06/30</td></tr>
+          <tr><td>年月標籤</td><td>用來命名產生的分頁</td><td>2026-06</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-teal"><strong>每個月發薪前，記得把日期更新成當月！</strong></div>
+
+      <h3>C. 投保薪資分級表</h3>
+      <p>前往分頁：<strong>「投保薪資分級表」</strong>。這張表已預填好 2026 年資料。若政府調整費率，直接修改 B 欄（員工勞保費）和 C 欄（員工健保費）的金額即可，不需動程式碼。</p>
+    </section>
+
+    <!-- 五 -->
+    <section id="s5">
+      <h2><span class="num">五</span>每個月的操作步驟</h2>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-body">
+            <strong>填入排班紀錄</strong>
+            前往分頁「排班表」，每一列填一筆出勤：
+          </div>
+        </div>
+      </div>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>欄</th><th>欄位名稱</th><th>怎麼填</th><th>範例</th></tr></thead>
+        <tbody>
+          <tr><td>A</td><td>日期</td><td>格式 YYYY/MM/DD</td><td>2026/06/02</td></tr>
+          <tr><td>B</td><td>員工編號</td><td>要和員工資料的編號一致</td><td>E001</td></tr>
+          <tr><td>C</td><td>上班時間</td><td>格式 HH:MM（24小時制）</td><td>09:00</td></tr>
+          <tr><td>D</td><td>下班時間</td><td>格式 HH:MM（24小時制）</td><td>18:00</td></tr>
+          <tr><td>E</td><td>休息(分鐘)</td><td>休息時間不計工時，預設 60 分鐘</td><td>60</td></tr>
+          <tr><td>F</td><td>備註</td><td>選填</td><td>加班3h</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout callout-blue">
+        <strong>勞基法自動警示（不需按任何按鈕）：</strong><br>
+        當一列的日期、員工編號、上班時間、下班時間<strong>四個欄位都填好後</strong>，系統會自動執行一次合規檢查，有問題立刻彈出通知、整列變橘色：<br><br>
+        ・當天加班有沒有超過 4 小時<br>
+        ・這個月加班總時數有沒有超過 46 小時<br>
+        ・有沒有連續上班超過 6 天<br><br>
+        ※ 此功能與選單「⑥ 勞基法合規檢查」不同：這是排班當下的<strong>即時單列提醒</strong>；選單功能是月底手動產生的<strong>整月完整報告</strong>。
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-body">
+            <strong>確認計算月份</strong>
+            到「薪資設定」確認起始日期、結束日期、年月標籤已更新為本月。
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-body">
+            <strong>產生薪資條</strong>
+            選單 → 「④ 產生本月薪資條」<br>
+            自動建立 <code>薪資條_2026-06</code> 分頁，含逐日明細、加班費計算、實付薪資。
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-body">
+            <strong>產生薪資總表</strong>
+            選單 → 「⑤ 產生本月薪資總表」<br>
+            建立 <code>薪資總表_2026-06</code> 分頁，一眼看全部員工的應付金額與用人總成本。
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-body">
+            <strong>（選做）勞基法合規檢查</strong>
+            選單 → 「⑥ 勞基法合規檢查」
+          </div>
+        </div>
+      </div>
+
+      <p>合規報告違規顏色說明：</p>
+      <div class="color-badges">
+        <span class="badge badge-red">紅色 — 每日加班超時</span>
+        <span class="badge badge-yellow">黃色 — 每月加班超時</span>
+        <span class="badge badge-blue">藍色 — 連續上班超天</span>
+      </div>
+    </section>
+
+    <!-- 六 -->
+    <section id="s6">
+      <h2><span class="num">六</span>加班費計算方式說明</h2>
+      <p>系統依<strong>勞基法</strong>計算加班費，規則如下：</p>
+      <div class="formula">
+每天實際工作時數 - 標準工時(8h) = 加班時數
+
+加班前 2 小時：時薪（或月薪換算時薪）× 1.33
+加班超過 2 小時的部分：           × 1.67
+      </div>
+
+      <h3>月薪員工的時薪怎麼算？</h3>
+      <div class="formula">月薪 ÷ 240 = 每小時底薪（勞基法預設值，可在薪資設定修改）</div>
+
+      <h3>完整舉例</h3>
+      <div class="callout callout-blue">
+        員工時薪 180 元，今天上班 10 小時（含 1 小時休息，實際計薪 9 小時）：<br><br>
+        正常工時 8 小時：180 × 8 = <strong>1,440 元</strong><br>
+        加班前 2 小時：180 × 1.33 × 2 = <strong>479 元</strong><br>
+        加班超過 2 小時（1 小時）：180 × 1.67 × 1 = <strong>301 元</strong><br><br>
+        當天合計：1,440 + 479 + 301 = <strong>2,220 元</strong>
+      </div>
+    </section>
+
+    <!-- 七 -->
+    <section id="s7">
+      <h2><span class="num">七</span>刪除本月產生的報表</h2>
+      <p>如果需要重新產生，可以先刪除舊的（系統都會再詢問確認，不用怕手滑）：</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>選單項目</th><th>動作</th></tr></thead>
+        <tbody>
+          <tr><td>刪除本月薪資條</td><td>刪除 <code>薪資條_YYYY-MM</code> 分頁</td></tr>
+          <tr><td>刪除本月薪資總表</td><td>刪除 <code>薪資總表_YYYY-MM</code> 分頁</td></tr>
+          <tr><td>刪除本月合規報告</td><td>刪除 <code>合規檢查_YYYY-MM</code> 分頁</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout callout-teal">也可以直接重新點「產生」，系統會問你是否清除並重新產生，點「是」即可覆蓋。</div>
+    </section>
+
+    <!-- 八 FAQ -->
+    <section id="s8">
+      <h2><span class="num">八</span>常見問題 FAQ</h2>
+      <p style="margin-bottom:14px;color:#78909C;font-size:.9rem;">點擊問題展開解答</p>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q1</span>第一次打開試算表，上方沒有「薪資系統」選單？<span class="arrow">▶</span></div>
+        <div class="faq-a">選單是靠 Google Apps Script 建立的，需要<strong>重新整理頁面</strong>，或重新打開試算表。如果還是沒有，請確認程式碼已正確貼入且已儲存（Apps Script 編輯器右上角點「儲存」圖示）。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q2</span>點「產生薪資條」後跳出「排班表在計算期間內沒有資料！」<span class="arrow">▶</span></div>
+        <div class="faq-a">請確認三件事：<br>
+          1. 「薪資設定」裡的起始/結束日期是否更新為正確的年月<br>
+          2. 「排班表」日期欄（A欄）格式是否正確（<code>yyyy/MM/dd</code>），而非純文字<br>
+          3. 排班表員工編號（B欄）是否和「員工資料」的編號<strong>完全一致</strong>（包括大小寫）
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q3</span>員工資料的投保薪資（H欄）要填什麼？<span class="arrow">▶</span></div>
+        <div class="faq-a">有兩種做法：<br>
+          ・<strong>填 0 或留空</strong>：系統自動依當月實際薪資對照「投保薪資分級表」，自動選最接近的級距（最省事，推薦）<br>
+          ・<strong>手動填金額</strong>：強制使用你填的數字作為投保基礎（適合薪資變動頻繁但投保薪資想固定的情況）
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q4</span>月薪員工為什麼薪資條上沒有「時薪費」的明細？<span class="arrow">▶</span></div>
+        <div class="faq-a">月薪員工的底薪是<strong>固定的</strong>，不依出勤時數計算。薪資條上顯示的是固定底薪加上加班費，這是正常的。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q5</span>排班表填完後，整列變成橘色，是壞掉了嗎？<span class="arrow">▶</span></div>
+        <div class="faq-a">不是壞掉，是系統在提醒你這筆排班有<strong>勞基法疑慮</strong>（例如加班超時或連續上班太多天）。修正排班資料後，如果不再超限，橘色背景和備注會自動清除。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q6</span>加班費費率可以改嗎？<span class="arrow">▶</span></div>
+        <div class="faq-a">可以。前往「薪資設定」分頁，直接修改數值：<br>
+          ・<code>平日加班費率1</code>：加班前 2 小時的倍率（預設 1.33）<br>
+          ・<code>平日加班費率2</code>：加班超過 2 小時的倍率（預設 1.67）<br><br>
+          <strong>注意：</strong>修改費率不影響已產生的薪資條，只影響下次重新產生時的計算。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q7</span>勞健保費率每年都在調整，怎麼更新？<span class="arrow">▶</span></div>
+        <div class="faq-a">有兩個地方需要更新：<br>
+          1. <strong>「薪資設定」分頁</strong>：修改 <code>勞保費率_員工</code>、<code>健保費率_員工</code>、<code>勞保費率_雇主</code>、<code>健保費率_雇主</code> 等費率數值<br>
+          2. <strong>「投保薪資分級表」分頁</strong>：直接修改 B 欄（員工勞保費）和 C 欄（員工健保費）的金額
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q8</span>一位員工同一天有兩筆打卡紀錄（例如早班＋晚班），可以嗎？<span class="arrow">▶</span></div>
+        <div class="faq-a">可以，系統會把同一位員工同一天的每一列都<strong>各自計算</strong>。但勞基法合規檢查不會合併兩筆來判斷休息間隔是否足夠，這一點請老闆自行注意。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q9</span>員工有勞退自提，要怎麼設定？<span class="arrow">▶</span></div>
+        <div class="faq-a">在「員工資料」的 I 欄（勞退自提率）填入比例：<br>
+          ・自提 6%：填 <code>0.06</code><br>
+          ・自提 3%：填 <code>0.03</code><br>
+          ・不自提：填 <code>0</code><br><br>
+          薪資條和薪資總表都會自動計算並顯示「勞退自提（扣）」的金額。
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q10</span>可以管理幾位員工？<span class="arrow">▶</span></div>
+        <div class="faq-a">沒有硬性上限。員工資料支援到第 1000 列，排班表也是。實際上限取決於 Google Apps Script 每次執行時間（約 6 分鐘），幾十位員工都沒有問題。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q11</span>薪資條產生了但想重新產生，怎麼辦？<span class="arrow">▶</span></div>
+        <div class="faq-a">直接點選單 → 「④ 產生本月薪資條」，系統會問你「是否清除並重新產生？」點「是」即可覆蓋。或者先點「刪除本月薪資條」再重新產生也可以。</div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q"><span class="tag">Q12</span>「薪資總表」裡的「用人總成本」是怎麼算的？<span class="arrow">▶</span></div>
+        <div class="faq-a">
+          <div class="formula" style="font-size:.82rem; line-height:1.8; margin:0;">
+用人總成本 = 員工應付薪資合計
+           + 雇主應付勞保費（投保薪資 × 8.75%）
+           + 雇主應付健保費（投保薪資 × 3.1%）
+           + 雇主退休金提撥（應付薪資 × 6%）
+          </div>
+          <p style="margin-top:8px;">這是老闆實際要「掏出去」的總金額，比員工領到的數字多很多。</p>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- 九 備忘卡 -->
+    <section id="s9">
+      <h2 class="teal"><span class="num">九</span>快速操作備忘卡</h2>
+      <div class="memo-card">
+        <div class="mc-title">【每月固定操作流程】</div>
+        <div class="mc-item">① 排班表 → 填入本月每筆出勤（日期 + 員工編號 + 上下班時間）</div>
+        <div class="mc-item">② 薪資設定 → 更新起始日期、結束日期、年月標籤</div>
+        <div class="mc-item">③ 選單 → ④ 產生本月薪資條</div>
+        <div class="mc-item">④ 選單 → ⑤ 產生本月薪資總表</div>
+        <div class="mc-item">⑤（可選）選單 → ⑥ 勞基法合規檢查</div>
+        <hr>
+        <div class="mc-title">【費率 / 規則依政府公告調整時】</div>
+        <div class="mc-item">投保薪資分級表：更新 B欄（勞保費）和 C欄（健保費）</div>
+        <div class="mc-item">薪資設定：更新各項費率數值</div>
+        <hr>
+        <div class="mc-title">【有新員工加入時】</div>
+        <div class="mc-item">員工資料 → 新增一列，填好所有欄位（A～I）</div>
+      </div>
+    </section>
+
+    <!-- 十 授權說明 -->
+    <section id="s10">
+      <h2 class="teal"><span class="num">十</span>授權方式說明</h2>
+
+      <div class="license-card">
+        <div class="lc-icon">🔖</div>
+        <div class="lc-body">
+          <strong>買斷制 — 購買一次，永久使用</strong>
+          <p>本系統採買斷授權方式，您在購買時所取得的版本，可<strong>無限期永久使用</strong>。無需按月付費，也不受日後版本更新影響，系統功能長期穩定。</p>
+        </div>
+      </div>
+
+      <div class="table-wrap"><table>
+        <thead><tr><th>項目</th><th>說明</th></tr></thead>
+        <tbody>
+          <tr><td>授權方式</td><td>買斷制（一次性付款）</td></tr>
+          <tr><td>使用年限</td><td>無限期永久使用</td></tr>
+          <tr><td>使用裝置</td><td>僅限購買時指定的 Google 帳號（一套授權一個帳號）</td></tr>
+          <tr><td>版本更新</td><td>購買後鎖定購買當下的版本；如需升級新功能，可另行購買升級方案</td></tr>
+          <tr><td>資料所有權</td><td>完全屬於您，存在您自己的 Google 試算表，Apodevelop 無法存取</td></tr>
+        </tbody>
+      </table></div>
+
+      <div class="callout callout-blue">
+        <strong>版本升級說明：</strong><br>
+        若日後 Apodevelop 推出新版本（例如新增功能、法規更新版），您可選擇是否購買升級方案。<strong>不升級不影響現有版本的正常使用</strong>，您的系統會繼續以購買時的版本穩定運行。
+      </div>
+
+      <div class="callout callout-green">
+        如有使用上的疑問或需要技術支援，歡迎聯繫 Apodevelop：<br>
+        <strong>service@apodevelop.com</strong>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  服務業薪資系統 Demo v1.0 ・ Apodevelop ・ 預設費率依 2026 年臺灣勞基法及勞健保規定
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      q.closest('.faq-item').classList.toggle('open');
+    });
+  });
+</script>
+
+</body>
+</html>
